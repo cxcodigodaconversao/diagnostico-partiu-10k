@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Descubra exatamente onde você precisa evoluir para chegar aos R$ 10k/mês como professor particular">
+    <meta name="keywords" content="professor, aulas particulares, renda, diagnóstico, ensino">
+    <meta name="author" content="Professor Partiu 10K">
+    <title>Diagnóstico Estratégico - Professor Partiu 10K</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0c121c 0%, #1a202c 50%, #0f1419 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+        }
+        
+        .header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(251, 191, 36, 0.3);
+        }
+        
+        .header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: #e5e7eb;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .header .subtitle {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .progress-section {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .progress-text {
+            color: #fbbf24;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #fbbf24);
+            border-radius: 20px;
+            transition: width 0.6s ease;
+            width: 0%;
+        }
+        
+        .quiz-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .question-card {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1f2937;
+            border-radius: 20px;
+            padding: 40px 32px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateY(0);
+            transition: all 0.5s ease;
+            margin: 0 10px;
+        }
+        
+        .question-card.fade-out {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        
+        .question-card.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .topic-indicator {
+            background: linear-gradient(90deg, #0c121c, #1e40af);
+            color: #fbbf24;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .question-number {
+            color: #6b7280;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+        
+        .question-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 32px;
+            line-height: 1.5;
+            padding: 0 10px;
+        }
+        
+        .rating-container {
+            margin: 28px 0;
+        }
+        
+        .rating-scale {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin: 20px auto;
+            max-width: 320px;
+            padding: 0 10px;
+        }
+        
+        .rating-scale input[type="radio"] {
+            display: none;
+        }
+        
+        .rating-scale label {
+            width: 100%;
+            height: 42px;
+            border-radius: 12px;
+            border: 2px solid #0c121c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            background: #ffffff;
+            color: #0c121c;
+            min-width: 38px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .rating-scale label:hover {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: #ffffff;
+            transform: scale(1.08);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .rating-scale input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, #0c121c, #1e40af);
+            border-color: #fbbf24;
+            color: #fbbf24;
+            transform: scale(1.12);
+            box-shadow: 0 8px 25px rgba(251, 191, 36, 0.3);
+        }
+        
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-top: 12px;
+            padding: 0 20px;
+            font-weight: 500;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+            gap: 16px;
+            padding: 0 10px;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex: 1;
+            max-width: 160px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #6b7280;
+            border: 2px solid #d1d5db;
+        }
+        
+        .btn-secondary:hover {
+            background: #f3f4f6;
+            color: #1f2937;
+            border-color: #9ca3af;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: #ffffff;
+            border: 2px solid transparent;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results {
+            display: none;
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .results h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #fbbf24;
+            margin-bottom: 16px;
+            text-shadow: 2px 2px 8px rgba(251, 191, 36, 0.3);
+        }
+        
+        .score-summary {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1f2937;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .total-score {
+            font-family: 'Poppins', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0c121c, #1e40af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+        
+        .score-level {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6rem;
+            color: #3b82f6;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .score-message {
+            font-size: 1.1rem;
+            color: #4b5563;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .chart-container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .detailed-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+        
+        .result-item {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1f2937;
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .result-title {
+            color: #0c121c;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .result-score {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #3b82f6, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .result-bar {
+            width: 100%;
+            height: 12px;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+        
+        .result-fill {
+            height: 100%;
+            border-radius: 20px;
+            transition: width 1s ease;
+            background: linear-gradient(90deg, #3b82f6, #fbbf24);
+        }
+        
+        .result-gap {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+        
+        .result-feedback {
+            background: rgba(59, 130, 246, 0.08);
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            border-radius: 0 12px 12px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #374151;
+        }
+        
+        .result-feedback.excellent {
+            border-left-color: #10b981;
+            background: rgba(16, 185, 129, 0.08);
+        }
+        
+        .result-feedback.good {
+            border-left-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.08);
+        }
+        
+        .result-feedback.improvement {
+            border-left-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.08);
+        }
+        
+        .result-feedback.urgent {
+            border-left-color: #ef4444;
+            background: rgba(239, 68, 68, 0.08);
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #0c121c, #1e40af, #3b82f6);
+            color: #ffffff;
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin-top: 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(59, 130, 246, 0.1));
+            z-index: 1;
+        }
+        
+        .cta-section > * {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-section h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 35px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            margin-top: 30px;
+        }
+        
+        .btn-cta {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #0c121c;
+            border: 3px solid transparent;
+            padding: 20px 45px;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            max-width: 500px;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .btn-cta:hover {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(251, 191, 36, 0.4);
+        }
+        
+        .btn-cta-secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .btn-cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                padding: 30px 15px;
+                margin-bottom: 30px;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+                margin-bottom: 12px;
+            }
+            
+            .header h2 {
+                font-size: 1.2rem;
+                margin-bottom: 16px;
+            }
+            
+            .progress-section {
+                padding: 18px;
+                margin-bottom: 24px;
+            }
+            
+            .progress-info {
+                margin-bottom: 12px;
+            }
+            
+            .progress-text {
+                font-size: 0.9rem;
+            }
+            
+            .question-card {
+                padding: 28px 18px;
+                margin: 0 5px;
+                border-radius: 16px;
+            }
+            
+            .question-text {
+                font-size: 1.15rem;
+                margin-bottom: 24px;
+                padding: 0 5px;
+            }
+            
+            .topic-indicator {
+                font-size: 0.75rem;
+                padding: 6px 14px;
+                margin-bottom: 16px;
+            }
+            
+            .question-number {
+                font-size: 0.85rem;
+                margin-bottom: 12px;
+            }
+            
+            .rating-scale {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 6px;
+                max-width: 280px;
+                padding: 0 5px;
+            }
+            
+            .rating-scale label {
+                height: 36px;
+                font-size: 0.9rem;
+                min-width: 32px;
+                border-width: 2px;
+                border-radius: 10px;
+            }
+            
+            .scale-labels {
+                font-size: 0.75rem;
+                padding: 0 12px;
+                margin-top: 10px;
+            }
+            
+            .navigation-buttons {
+                margin-top: 24px;
+                gap: 12px;
+                padding: 0 5px;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.85rem;
+                letter-spacing: 0.3px;
+            }
+            
+            .total-score {
+                font-size: 3rem;
+            }
+            
+            .chart-container {
+                padding: 30px 20px;
+                max-width: 100%;
+                margin: 30px auto;
+            }
+            
+            .detailed-results {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .result-item {
+                padding: 22px 16px;
+            }
+            
+            .result-feedback {
+                padding: 14px;
+                font-size: 0.9rem;
+            }
+            
+            .cta-section {
+                padding: 35px 25px;
+            }
+            
+            .cta-section h3 {
+                font-size: 1.8rem;
+                margin-bottom: 16px;
+            }
+            
+            .cta-section p {
+                font-size: 1.05rem;
+                margin-bottom: 28px;
+            }
+            
+            .cta-buttons {
+                gap: 14px;
+            }
+            
+            .btn-cta {
+                padding: 16px 32px;
+                font-size: 1.1rem;
+                letter-spacing: 0.5px;
+            }
+            
+            .btn-cta-secondary {
+                padding: 14px 28px;
+                font-size: 0.95rem;
+                letter-spacing: 0.3px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 12px;
+            }
+            
+            .header h1 {
+                font-size: 1.9rem;
+            }
+            
+            .header h2 {
+                font-size: 1.05rem;
+            }
+            
+            .question-card {
+                padding: 24px 14px;
+            }
+            
+            .question-text {
+                font-size: 1.05rem;
+            }
+            
+            .rating-scale {
+                max-width: 250px;
+                gap: 4px;
+            }
+            
+            .rating-scale label {
+                height: 34px;
+                font-size: 0.85rem;
+                min-width: 28px;
+            }
+            
+            .scale-labels {
+                font-size: 0.7rem;
+            }
+            
+            .btn {
+                padding: 10px 16px;
+                font-size: 0.8rem;
+            }
+            
+            .chart-container {
+                padding: 20px 12px;
+                margin: 20px auto;
+            }
+            
+            .detailed-results {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .result-feedback {
+                padding: 12px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Professor Partiu 10K</h1>
+            <h2>Diagnóstico Estratégico Completo</h2>
+            <p class="subtitle">Descubra exatamente onde você precisa evoluir para chegar aos R$ 10.000/mês</p>
+        </div>
+        
+        <div class="progress-section">
+            <div class="progress-info">
+                <span class="progress-text">Pergunta <span id="currentQuestion">1</span> de 26</span>
+                <span class="progress-text"><span id="progressPercent">4%</span> concluído</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+        
+        <div class="quiz-section" id="quizSection">
+            <div class="question-card" id="questionCard">
+                <div class="topic-indicator" id="topicIndicator">Pilares de um professor valorizado</div>
+                <div class="question-number" id="questionNumber">Pergunta 1/26</div>
+                <div class="question-text" id="questionText">
+                    Quando alguém pergunta "qual é o seu diferencial?", você consegue responder com clareza e segurança?
+                </div>
+                
+                <div class="rating-container">
+                    <div class="rating-scale">
+                        <input type="radio" name="currentAnswer" value="0" id="answer0">
+                        <label for="answer0">0</label>
+                        <input type="radio" name="currentAnswer" value="1" id="answer1">
+                        <label for="answer1">1</label>
+                        <input type="radio" name="currentAnswer" value="2" id="answer2">
+                        <label for="answer2">2</label>
+                        <input type="radio" name="currentAnswer" value="3" id="answer3">
+                        <label for="answer3">3</label>
+                        <input type="radio" name="currentAnswer" value="4" id="answer4">
+                        <label for="answer4">4</label>
+                        <input type="radio" name="currentAnswer" value="5" id="answer5">
+                        <label for="answer5">5</label>
+                        <input type="radio" name="currentAnswer" value="6" id="answer6">
+                        <label for="answer6">6</label>
+                        <input type="radio" name="currentAnswer" value="7" id="answer7">
+                        <label for="answer7">7</label>
+                        <input type="radio" name="currentAnswer" value="8" id="answer8">
+                        <label for="answer8">8</label>
+                        <input type="radio" name="currentAnswer" value="9" id="answer9">
+                        <label for="answer9">9</label>
+                        <input type="radio" name="currentAnswer" value="10" id="answer10">
+                        <label for="answer10">10</label>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Não tenho clareza</span>
+                        <span>Totalmente claro</span>
+                    </div>
+                </div>
+                
+                <div class="navigation-buttons">
+                    <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()" style="visibility: hidden;">Anterior</button>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>Próxima</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="results" class="results">
+            <div class="results-header">
+                <h2>Seu Resultado Completo</h2>
+                <div class="score-summary">
+                    <div class="total-score" id="totalScore">0%</div>
+                    <div class="score-level" id="scoreLevel">Calculando...</div>
+                    <div class="score-message" id="scoreMessage"></div>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="radarChart" width="400" height="400"></canvas>
+            </div>
+            
+            <div class="detailed-results" id="detailedResults">
+                <!-- Results will be populated here -->
+            </div>
+            
+            <div class="cta-section">
+                <h3>🚀 Pronto para os 10K?</h3>
+                <p>Seu diagnóstico revela exatamente onde você precisa focar para sair dos R$ 4-6k e chegar aos <strong>R$ 10.000/mês</strong> como professor particular. O programa <strong>Professor Partiu 10K</strong> vai te dar todas as estratégias que faltam!</p>
+                
+                <div class="cta-buttons">
+                    <a href="#" class="btn-cta">Quero Participar do Professor Partiu 10K</a>
+                    <a href="#" class="btn-cta-secondary" target="_blank">Falar com Nossa Equipe</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const topics = [
+            {
+                name: 'pilares',
+                label: 'Pilares de um Professor Valorizado',
+                color: '#3b82f6',
+                questions: [
+                    {
+                        text: 'Quando alguém pergunta "qual é o seu diferencial?", você consegue responder com clareza e segurança?',
+                        labels: ['Não tenho clareza', 'Totalmente claro']
+                    },
+                    {
+                        text: 'Você acredita que a sua comunicação gera percepção de autoridade ou você ainda depende de preço baixo para atrair alunos?',
+                        labels: ['Dependo só de preço baixo', 'Tenho autoridade reconhecida']
+                    }
+                ]
+            },
+            {
+                name: 'precificacao',
+                label: 'Sistema de Precificação VHS',
+                color: '#fbbf24',
+                questions: [
+                    {
+                        text: 'Você sabe exatamente quanto precisa cobrar para ter lucro real por hora de aula?',
+                        labels: ['Não sei calcular', 'Domino completamente']
+                    },
+                    {
+                        text: 'Ao pensar em aumentar seus preços, você sente confiança ou medo de perder alunos?',
+                        labels: ['Muito medo', 'Super confiante']
+                    },
+                    {
+                        text: 'Você já tem clareza de como transformar seu preço em percepção de valor, sem depender de desconto?',
+                        labels: ['Não sei transformar', 'Domino totalmente']
+                    }
+                ]
+            },
+            {
+                name: 'gestao_tempo',
+                label: 'Gestão de Tempo (Free Friday)',
+                color: '#10b981',
+                questions: [
+                    {
+                        text: 'Sua rotina de aulas te deixa exausto(a) ou você sente que domina sua agenda?',
+                        labels: ['Totalmente exausto(a)', 'Domino minha agenda']
+                    },
+                    {
+                        text: 'Você consegue reservar tempo para descanso, estratégia e crescimento, ou vive apagando incêndios?',
+                        labels: ['Sempre apagando incêndios', 'Tenho tempo estratégico']
+                    },
+                    {
+                        text: 'Seu tempo hoje está alinhado com produtividade e resultado, ou só com sobrevivência?',
+                        labels: ['Só sobrevivência', 'Produtividade e resultado']
+                    }
+                ]
+            },
+            {
+                name: 'divulgacao',
+                label: '6 Formas de Divulgar o Trabalho',
+                color: '#8b5cf6',
+                questions: [
+                    {
+                        text: 'Hoje, sua captação de alunos depende apenas de boca a boca?',
+                        labels: ['100% dependente', 'Tenho captação diversificada']
+                    },
+                    {
+                        text: 'Você já consegue atrair novos alunos de forma previsível, sem depender da sorte?',
+                        labels: ['Dependo da sorte', 'Captação previsível']
+                    },
+                    {
+                        text: 'Você domina tanto a divulgação offline quanto online, ou sente que está invisível no mercado?',
+                        labels: ['Invisível no mercado', 'Domino offline e online']
+                    }
+                ]
+            },
+            {
+                name: 'instagram',
+                label: 'Estratégias no Instagram',
+                color: '#f59e0b',
+                questions: [
+                    {
+                        text: 'Seu perfil transmite autoridade ou parece mais um perfil comum de professor?',
+                        labels: ['Perfil comum', 'Transmite autoridade']
+                    },
+                    {
+                        text: 'Você sabe exatamente que tipo de conteúdo atrai e converte alunos?',
+                        labels: ['Não sei que conteúdo', 'Sei exatamente o que atrai']
+                    },
+                    {
+                        text: 'O Instagram hoje te traz alunos ou só consome o seu tempo?',
+                        labels: ['Só consome tempo', 'Traz alunos consistentemente']
+                    }
+                ]
+            },
+            {
+                name: 'reuniao_negocios',
+                label: 'Reunião de Negócios',
+                color: '#ef4444',
+                questions: [
+                    {
+                        text: 'Você já tem segurança para conduzir uma reunião de fechamento sem depender de desconto?',
+                        labels: ['Não tenho segurança', 'Totalmente seguro(a)']
+                    },
+                    {
+                        text: 'Quando um aluno fala "não", você sabe lidar e transformar em sim?',
+                        labels: ['Não sei lidar', 'Sei contornar objeções']
+                    },
+                    {
+                        text: 'Seu processo de reunião gera clareza para o aluno decidir, ou fica solto e sem direção?',
+                        labels: ['Solto e sem direção', 'Gera clareza total']
+                    }
+                ]
+            },
+            {
+                name: 'vendas',
+                label: 'Técnicas de Venda (Armas da Persuasão)',
+                color: '#06b6d4',
+                questions: [
+                    {
+                        text: 'Você já usa gatilhos como autoridade, escassez ou prova social para fechar alunos?',
+                        labels: ['Não uso gatilhos', 'Domino todos os gatilhos']
+                    },
+                    {
+                        text: 'Ao conversar com um aluno, você sente que está no controle da venda ou refém da decisão dele?',
+                        labels: ['Refém da decisão', 'No controle da venda']
+                    },
+                    {
+                        text: 'Você se sente seguro em aplicar técnicas de venda sem parecer insistente?',
+                        labels: ['Não me sinto seguro', 'Totalmente seguro']
+                    }
+                ]
+            },
+            {
+                name: 'contrato_retencao',
+                label: 'Contrato e Retenção',
+                color: '#84cc16',
+                questions: [
+                    {
+                        text: 'Seus alunos permanecem com você por meses/anos ou saem rapidamente?',
+                        labels: ['Saem rapidamente', 'Ficam meses/anos']
+                    },
+                    {
+                        text: 'Você já tem contratos claros que garantem estabilidade financeira no seu negócio?',
+                        labels: ['Não tenho contratos', 'Contratos estruturados']
+                    }
+                ]
+            },
+            {
+                name: 'escalar_negocio',
+                label: 'Como Escalar o Negócio',
+                color: '#f97316',
+                questions: [
+                    {
+                        text: 'Você sente que já bateu no teto de alunos individuais e não sabe como crescer além disso?',
+                        labels: ['Bati no teto', 'Vejo caminhos de crescimento']
+                    },
+                    {
+                        text: 'Você já pensou em criar formatos de aulas em grupo ou infoprodutos para escalar?',
+                        labels: ['Nunca pensei', 'Já planejo escalar']
+                    }
+                ]
+            },
+            {
+                name: 'infoproduto',
+                label: 'Primeiros Passos de um Infoproduto',
+                color: '#ec4899',
+                questions: [
+                    {
+                        text: 'Você já tem clareza sobre qual seria seu primeiro infoproduto para escalar seus ganhos?',
+                        labels: ['Não tenho clareza', 'Sei exatamente o que criar']
+                    },
+                    {
+                        text: 'Você entende como transformar seu conhecimento em algo gravado e vendável?',
+                        labels: ['Não entendo', 'Domino o processo']
+                    }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let answers = {};
+        let radarChart;
+
+        // Flatten all questions for easier navigation
+        const allQuestions = [];
+        topics.forEach(topic => {
+            topic.questions.forEach((question, index) => {
+                allQuestions.push({
+                    topicName: topic.name,
+                    topicLabel: topic.label,
+                    topicColor: topic.color,
+                    questionIndex: index,
+                    text: question.text,
+                    labels: question.labels,
+                    id: `${topic.name}_${index}`
+                });
+            });
+        });
+
+        function getTopicFeedback(topicName, score, percentage) {
+            const feedbacks = {
+                'pilares': {
+                    excellent: "🏆 Parabéns! Você já tem clareza sobre seu valor e consegue se posicionar com autoridade. Continue explorando formas de comunicar ainda melhor seus diferenciais únicos.",
+                    good: "👍 Você tem uma boa noção do seu valor! Para evoluir, defina 3 diferenciais específicos e pratique como apresentá-los de forma convincente em 30 segundos.",
+                    improvement: "📈 Precisa trabalhar sua percepção de valor. Faça uma lista dos seus pontos fortes, colete depoimentos de alunos e pratique seu elevator pitch.",
+                    urgent: "🚨 Definir seus pilares é fundamental para cobrar mais. Identifique suas especialidades, resultados que gera e o que te diferencia dos concorrentes."
+                },
+                'precificacao': {
+                    excellent: "💰 Você domina a precificação estratégica! Continue refinando seus cálculos e testando aumentos gradativos baseados no valor que entrega.",
+                    good: "📊 Boa base de precificação! Para evoluir, calcule todos seus custos (fixos + variáveis) e implemente aumentos baseados em valor, não em hora.",
+                    improvement: "🔢 Sua precificação precisa de estrutura. Aprenda a calcular custo real por hora, margem de lucro e como justificar preços pelo valor entregue.",
+                    urgent: "⚠️ Precificação inadequada está limitando sua renda. Urgente: calcule seus custos reais, defina margem de lucro mínima e pratique como apresentar preços com confiança."
+                },
+                'gestao_tempo': {
+                    excellent: "⏰ Você tem excelente gestão de tempo! Continue otimizando sua agenda e reserve tempo para estratégias de crescimento do negócio.",
+                    good: "📅 Boa organização da agenda! Para evoluir, bloqueie horários fixos para planejamento estratégico e desenvolvimento profissional.",
+                    improvement: "🕒 Sua gestão de tempo pode melhorar muito. Implemente agenda estruturada, bloqueie horários para descanso e planejamento estratégico.",
+                    urgent: "🔥 A falta de gestão de tempo está te esgotando. Urgente: estruture sua agenda, defina limites claros e reserve tempo para crescimento do negócio."
+                },
+                'divulgacao': {
+                    excellent: "📢 Sua divulgação é diversificada e eficaz! Continue testando novos canais e medindo resultados de cada estratégia.",
+                    good: "🎯 Boa diversificação na captação! Para evoluir, mapeie todas as possibilidades e crie um plano mensal de divulgação estruturado.",
+                    improvement: "📈 Precisa diversificar sua captação. Explore redes sociais, parcerias, eventos e indicações estruturadas para não depender só do boca a boca.",
+                    urgent: "🚨 Dependência total do boca a boca é arriscada. Urgente: implemente pelo menos 3 formas diferentes de captação para garantir fluxo constante de alunos."
+                },
+                'instagram': {
+                    excellent: "📸 Seu Instagram é uma máquina de captação! Continue criando conteúdo de valor e testando formatos que engajam sua audiência.",
+                    good: "📱 Instagram funcionando bem! Para evoluir, crie um plano de conteúdo semanal e use mais stories para mostrar resultados dos alunos.",
+                    improvement: "📊 Seu Instagram pode gerar muito mais resultado. Foque em conteúdo educativo, depoimentos de alunos e calls to action claros.",
+                    urgent: "⚡ Instagram mal aproveitado está custando alunos. Urgente: defina nicho, poste conteúdo de valor consistentemente e inclua calls to action."
+                },
+                'reuniao_negocios': {
+                    excellent: "🤝 Você domina reuniões de fechamento! Continue refinando suas técnicas e praticando diferentes cenários de objeções.",
+                    good: "💼 Boas habilidades de negociação! Para evoluir, estruture um roteiro de reunião e pratique respostas para principais objeções.",
+                    improvement: "🎯 Suas reuniões podem converter muito mais. Aprenda estrutura de reunião, técnicas de fechamento e como lidar com objeções.",
+                    urgent: "📞 Reuniões mal conduzidas estão perdendo vendas. Urgente: aprenda estrutura básica, prepare respostas para objeções e pratique fechamentos."
+                },
+                'vendas': {
+                    excellent: "🎯 Você é um vendedor nato! Continue estudando psicologia da venda e testando novos gatilhos mentais em suas abordagens.",
+                    good: "💪 Boas técnicas de venda! Para evoluir, implemente mais gatilhos de escassez e urgência, e colete mais provas sociais.",
+                    improvement: "🧠 Precisa estudar psicologia de vendas. Aprenda sobre autoridade, escassez, reciprocidade e como aplicar esses gatilhos nas suas conversas.",
+                    urgent: "🚨 Falta de técnicas de venda está limitando sua renda. Urgente: estude gatilhos mentais básicos e pratique como aplicá-los naturalmente."
+                },
+                'contrato_retencao': {
+                    excellent: "📋 Excelente retenção de alunos! Continue investindo no relacionamento e coletando feedback para melhorar ainda mais a experiência.",
+                    good: "🤝 Boa retenção! Para evoluir, implemente sistema de feedback regular e crie programa de fidelidade ou recompensas.",
+                    improvement: "⏳ Sua retenção pode melhorar. Crie contratos mais estruturados e implemente sistema de acompanhamento do progresso dos alunos.",
+                    urgent: "💸 Alta rotatividade está prejudicando sua renda. Urgente: crie contratos claros, estabeleça metas com alunos e melhore seu sistema de ensino."
+                },
+                'escalar_negocio': {
+                    excellent: "🚀 Você tem visão de escala! Continue desenvolvendo produtos escaláveis e sistemas que não dependam apenas do seu tempo.",
+                    good: "📈 Boa visão de crescimento! Para evoluir, teste aulas em grupo pequenos e crie seu primeiro produto digital.",
+                    improvement: "💡 Precisa pensar além das aulas individuais. Explore grupos, mentorias coletivas e produtos digitais para multiplicar sua renda.",
+                    urgent: "🔒 Limitação só a aulas individuais impede crescimento. Urgente: teste formatos em grupo e comece a planejar produtos escaláveis."
+                },
+                'infoproduto': {
+                    excellent: "💻 Você entende como escalar com infoprodutos! Continue validando ideias e criando conteúdos que resolvam problemas específicos.",
+                    good: "📚 Boa noção sobre infoprodutos! Para evoluir, valide uma ideia específica com seu público e comece a criar o primeiro produto.",
+                    improvement: "🎓 Precisa entender melhor infoprodutos. Identifique qual conhecimento você pode sistematizar e ensinar de forma escalável.",
+                    urgent: "💼 Não aproveitar seu conhecimento para infoprodutos limita muito sua renda. Urgente: identifique sua especialidade e valide uma primeira ideia de produto."
+                }
+            };
+
+            const topicFeedback = feedbacks[topicName];
+            if (!topicFeedback) return "Continue desenvolvendo suas habilidades!";
+
+            if (percentage >= 80) return topicFeedback.excellent;
+            if (percentage >= 60) return topicFeedback.good;
+            if (percentage >= 40) return topicFeedback.improvement;
+            return topicFeedback.urgent;
+        }
+
+        function getFeedbackClass(percentage) {
+            if (percentage >= 80) return 'excellent';
+            if (percentage >= 60) return 'good';
+            if (percentage >= 40) return 'improvement';
+            return 'urgent';
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / allQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('progressPercent').textContent = `${Math.round(progress)}%`;
+        }
+
+        function displayQuestion() {
+            const question = allQuestions[currentQuestionIndex];
+            
+            document.getElementById('topicIndicator').textContent = question.topicLabel;
+            document.getElementById('questionNumber').textContent = `Pergunta ${currentQuestionIndex + 1}/26`;
+            document.getElementById('questionText').textContent = question.text;
+            
+            // Update scale labels
+            const labels = document.querySelectorAll('.scale-labels span');
+            labels[0].textContent = question.labels[0];
+            labels[1].textContent = question.labels[1];
+            
+            // Clear previous selection
+            const radioButtons = document.querySelectorAll('input[name="currentAnswer"]');
+            radioButtons.forEach(radio => radio.checked = false);
+            
+            // Restore previous answer if exists
+            if (answers[question.id] !== undefined) {
+                document.getElementById(`answer${answers[question.id]}`).checked = true;
+            }
+            
+            updateNavigationButtons();
+            updateProgress();
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Show/hide previous button
+            if (currentQuestionIndex === 0) {
+                prevBtn.style.visibility = 'hidden';
+            } else {
+                prevBtn.style.visibility = 'visible';
+            }
+            
+            // Check if answer is selected
+            const selectedAnswer = document.querySelector('input[name="currentAnswer"]:checked');
+            nextBtn.disabled = !selectedAnswer;
+            
+            // Change button text for last question
+            if (currentQuestionIndex === allQuestions.length - 1) {
+                nextBtn.textContent = 'Ver Resultado';
+            } else {
+                nextBtn.textContent = 'Próxima';
+            }
+        }
+
+        function saveCurrentAnswer() {
+            const selectedAnswer = document.querySelector('input[name="currentAnswer"]:checked');
+            if (selectedAnswer) {
+                const question = allQuestions[currentQuestionIndex];
+                answers[question.id] = parseInt(selectedAnswer.value);
+            }
+        }
+
+        function nextQuestion() {
+            saveCurrentAnswer();
+            
+            if (currentQuestionIndex < allQuestions.length - 1) {
+                currentQuestionIndex++;
+                
+                // Add fade effect
+                const card = document.getElementById('questionCard');
+                card.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    displayQuestion();
+                    card.classList.remove('fade-out');
+                    card.classList.add('fade-in');
+                    
+                    setTimeout(() => {
+                        card.classList.remove('fade-in');
+                    }, 300);
+                }, 300);
+            } else {
+                // Show results
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                saveCurrentAnswer();
+                currentQuestionIndex--;
+                
+                // Add fade effect
+                const card = document.getElementById('questionCard');
+                card.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    displayQuestion();
+                    card.classList.remove('fade-out');
+                    card.classList.add('fade-in');
+                    
+                    setTimeout(() => {
+                        card.classList.remove('fade-in');
+                    }, 300);
+                }, 300);
+            }
+        }
+
+        function calculateResults() {
+            const topicResults = {};
+            let totalScore = 0;
+            let totalQuestions = 0;
+
+            topics.forEach(topic => {
+                let topicScore = 0;
+                let topicQuestions = 0;
+                
+                topic.questions.forEach((question, index) => {
+                    const questionId = `${topic.name}_${index}`;
+                    if (answers[questionId] !== undefined) {
+                        topicScore += answers[questionId];
+                        topicQuestions++;
+                    }
+                });
+                
+                const averageScore = topicQuestions > 0 ? topicScore / topicQuestions : 0;
+                topicResults[topic.name] = {
+                    score: averageScore,
+                    percentage: (averageScore / 10) * 100,
+                    label: topic.label,
+                    color: topic.color
+                };
+                
+                totalScore += topicScore;
+                totalQuestions += topicQuestions;
+            });
+
+            const overallAverage = totalQuestions > 0 ? totalScore / totalQuestions : 0;
+            const overallPercentage = (overallAverage / 10) * 100;
+
+            return {
+                individual: topicResults,
+                total: totalScore,
+                average: overallAverage,
+                percentage: overallPercentage
+            };
+        }
+
+        function getScoreLevel(percentage) {
+            if (percentage >= 80) return { 
+                level: 'Professor Expert', 
+                message: 'Você já tem uma base muito sólida! Está próximo dos 10K, precisa apenas refinar alguns detalhes estratégicos.' 
+            };
+            if (percentage >= 60) return { 
+                level: 'Professor Intermediário+', 
+                message: 'Você tem um bom potencial, mas ainda há gaps importantes que estão limitando seu crescimento para os 10K.' 
+            };
+            if (percentage >= 40) return { 
+                level: 'Professor em Evolução', 
+                message: 'Há muito espaço para crescimento. Com as estratégias certas, você pode dobrar sua renda atual!' 
+            };
+            return { 
+                level: 'Professor Iniciante', 
+                message: 'Você está no ponto perfeito para uma transformação completa! Tem todo o potencial para chegar aos 10K.' 
+            };
+        }
+
+        function createRadarChart(results) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            
+            if (radarChart) {
+                radarChart.destroy();
+            }
+
+            const labels = topics.map(topic => topic.label);
+            const dataPoints = topics.map(topic => results.individual[topic.name].score);
+            const idealPoints = new Array(topics.length).fill(10);
+
+            // Detectar se é mobile para ajustar configurações
+            const isMobile = window.innerWidth <= 768;
+            const pointLabelSize = isMobile ? 9 : 10;
+            const legendSize = isMobile ? 12 : 14;
+
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Seu Nível Atual',
+                            data: dataPoints,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                            borderWidth: 3,
+                            pointBackgroundColor: '#3b82f6',
+                            pointBorderColor: '#fbbf24',
+                            pointBorderWidth: 3,
+                            pointRadius: 6
+                        },
+                        {
+                            label: 'Nível para 10K (Meta)',
+                            data: idealPoints,
+                            borderColor: '#fbbf24',
+                            backgroundColor: 'rgba(251, 191, 36, 0.1)',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#fbbf24',
+                            pointBorderColor: '#3b82f6',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#1f2937',
+                                font: {
+                                    size: legendSize,
+                                    weight: 'bold',
+                                    family: 'Poppins'
+                                },
+                                padding: 20,
+                                usePointStyle: true
+                            },
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 10,
+                            ticks: {
+                                stepSize: 2,
+                                color: '#6b7280',
+                                backdropColor: 'transparent',
+                                font: {
+                                    size: 10
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(107, 114, 128, 0.2)'
+                            },
+                            angleLines: {
+                                color: 'rgba(107, 114, 128, 0.2)'
+                            },
+                            pointLabels: {
+                                color: '#374151',
+                                font: {
+                                    size: pointLabelSize,
+                                    weight: 'bold',
+                                    family: 'Inter'
+                                },
+                                padding: 15
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function displayDetailedResults(results) {
+            const container = document.getElementById('detailedResults');
+            container.innerHTML = '';
+
+            topics.forEach(topic => {
+                const result = results.individual[topic.name];
+                const gap = 10 - result.score;
+                const gapPercentage = (gap / 10) * 100;
+                const feedback = getTopicFeedback(topic.name, result.score, result.percentage);
+                const feedbackClass = getFeedbackClass(result.percentage);
+
+                const resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                resultItem.innerHTML = `
+                    <div class="result-title">${result.label}</div>
+                    <div class="result-score">${result.score.toFixed(1)}/10 (${result.percentage.toFixed(0)}%)</div>
+                    <div class="result-bar">
+                        <div class="result-fill" style="width: ${result.percentage}%;"></div>
+                    </div>
+                    <div class="result-gap">
+                        Potencial de melhoria: ${gap.toFixed(1)} pontos (${gapPercentage.toFixed(0)}%)
+                    </div>
+                    <div class="result-feedback ${feedbackClass}">
+                        ${feedback}
+                    </div>
+                `;
+                container.appendChild(resultItem);
+            });
+        }
+
+        function showResults() {
+            const results = calculateResults();
+            const scoreInfo = getScoreLevel(results.percentage);
+
+            // Update score display
+            document.getElementById('totalScore').textContent = `${results.percentage.toFixed(0)}%`;
+            document.getElementById('scoreLevel').textContent = `${scoreInfo.level}`;
+            document.getElementById('scoreMessage').textContent = scoreInfo.message;
+
+            // Create radar chart
+            createRadarChart(results);
+
+            // Display detailed results
+            displayDetailedResults(results);
+
+            // Hide quiz and show results
+            document.getElementById('quizSection').style.display = 'none';
+            document.querySelector('.progress-section').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Event listeners
+        document.addEventListener('change', function(e) {
+            if (e.target.name === 'currentAnswer') {
+                updateNavigationButtons();
+            }
+        });
+
+        // Initialize
+        displayQuestion();
+    </script>
+</body>
+</html>
