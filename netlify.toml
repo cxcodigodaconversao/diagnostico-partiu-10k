@@ -1,0 +1,63 @@
+[build]
+  publish = "."
+  command = "echo 'Build complete - Professor Partiu 10K'"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/diagnostico"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/quiz"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/teste"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/professor"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/10k"
+  to = "/index.html"
+  status = 200
+
+# Cache static assets
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Security headers specifically for the quiz
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    X-Robots-Tag = "index, follow"
+    X-Content-Type-Options = "nosniff"
